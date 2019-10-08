@@ -49,10 +49,9 @@ class DefaultLayout extends Component {
             <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
-            <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router}/>
+            <br/>
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
@@ -68,16 +67,11 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/dashboard" />
+                  <Redirect from="/" to="/admin" />
                 </Switch>
               </Suspense>
             </Container>
           </main>
-          <AppAside fixed>
-            <Suspense fallback={this.loading()}>
-              <DefaultAside />
-            </Suspense>
-          </AppAside>
         </div>
         <AppFooter>
           <Suspense fallback={this.loading()}>
