@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Progress, TabContent, TabPane, Nav, NavItem, NavLink, Button } from 'reactstrap';
 
-var alreadySelected = false;
-
 class Admin extends Component {
 
   constructor(props) {
@@ -11,36 +9,115 @@ class Admin extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: new Array(4).fill('1'),
+      file: '',
+      imagePreviewUrl: '',
       verticalColor: 'primary',
       horizontalColor: 'primary',
+      layoutFirstColor: 'primary',
+      layoutSecondColor: 'primary',
+      layoutThirdColor: 'primary',
       orientation: 0,
+      layout: 0,
       progress: 0,
       secondPane: <></>,
       thirdPane: <></>,
       fourthPane: <></>
     };
+
+    this._handleImageChange = this._handleImageChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+  }
+
+  _handleSubmit(e) {
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+  }
+
+  _handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
   }
 
   chooseOrientation(selection) {
-    if (selection === 1)
+    if (selection === 1) {
       this.setState({
         verticalColor: 'success',
         horizontalColor: 'primary',
+        layoutFirstColor: 'primary',
+        layoutSecondColor: 'primary',
+        layoutThirdColor: 'primary',
         orientation: selection
       }, function () {
         this.secondPane();
       });
-    else
+    }
+    else {
       this.setState({
         verticalColor: 'primary',
+        layoutFirstColor: 'primary',
+        layoutSecondColor: 'primary',
+        layoutThirdColor: 'primary',
         horizontalColor: 'success',
         orientation: selection
       }, function () {
         this.secondPane();
       });
+    }
 
-    if (alreadySelected === false) {
-      alreadySelected = true;
+    if (this.state.progress === 0) {
+      this.setState({
+        progress: this.state.progress + 25
+      });
+    }
+  }
+
+  chooseLayout(selection) {
+    if (selection === 1) {
+      this.setState({
+        layoutFirstColor: 'success',
+        layoutSecondColor: 'primary',
+        layoutThirdColor: 'primary',
+        layout: selection
+      }, function () {
+        this.secondPane();
+        this.thirdPane();
+      });
+    }
+    else if (selection === 2) {
+      this.setState({
+        layoutFirstColor: 'primary',
+        layoutSecondColor: 'success',
+        layoutThirdColor: 'primary',
+        layout: selection
+      }, function () {
+        this.secondPane();
+        this.thirdPane();
+      });
+    }
+    else {
+      this.setState({
+        layoutFirstColor: 'primary',
+        layoutSecondColor: 'primary',
+        layoutThirdColor: 'success',
+        layout: selection
+      }, function () {
+        this.secondPane();
+        this.thirdPane();
+      });
+    }
+
+    if (this.state.progress === 25) {
       this.setState({
         progress: this.state.progress + 25
       });
@@ -66,7 +143,13 @@ class Admin extends Component {
         <>
           <Row>
             <Col>
-              <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '3'); }}>A</Button></div>
+              <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+            </Col>
+            <Col>
+              <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+            </Col>
+            <Col>
+              <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
             </Col>
           </Row>
         </>
@@ -77,9 +160,50 @@ class Admin extends Component {
         <>
           <Row>
             <Col>
-              <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '3'); }}>B</Button></div>
+              <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+            </Col>
+            <Col>
+              <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+            </Col>
+            <Col>
+              <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
             </Col>
           </Row>
+        </>
+      });
+  }
+
+  thirdPane() {
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    }
+
+    if (this.state.layout === 1)
+      this.setState({
+        thirdPane:
+        <>
+          <div>
+            <form onSubmit={this._handleSubmit}>
+              <input type="file" onChange={this._handleImageChange} />
+              <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+            </form>
+            {$imagePreview}
+          </div>
+        </>
+      });
+    else
+      this.setState({
+        thirdPane:
+        <>
+          <div>
+            <form onSubmit={this._handleSubmit}>
+              <input type="file" onChange={this._handleImageChange} />
+              <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+            </form>
+            {$imagePreview}
+          </div>
         </>
       });
   }
@@ -133,7 +257,7 @@ class Admin extends Component {
                       onClick={() => { this.toggle(3, '1'); }}
                     >
                       <i className="icon-calculator"></i>
-                      <span className={this.state.activeTab[3] === '1' ? '' : 'd-none'}>AAAAAAAAAAAAAAAAAAAAAAA</span>
+                      <span className={this.state.activeTab[3] === '1' ? '' : 'd-none'}> Choose Orientation </span>
                       {'\u00A0'}<Badge color="success">New</Badge>
                     </NavLink>
                   </NavItem>
@@ -143,7 +267,7 @@ class Admin extends Component {
                       onClick={() => { this.toggle(3, '2'); }}
                     >
                       <i className="icon-basket-loaded"></i>
-                      <span className={this.state.activeTab[3] === '2' ? '' : 'd-none'}>BBBBBBBBBBBBBBBBBBBBBBBBBB</span>
+                      <span className={this.state.activeTab[3] === '2' ? '' : 'd-none'}> Choose Layout </span>
                       {'\u00A0'}<Badge pill color="danger">29</Badge>
                     </NavLink>
                   </NavItem>
@@ -153,7 +277,7 @@ class Admin extends Component {
                       onClick={() => { this.toggle(3, '3'); }}
                     >
                       <i className="icon-pie-chart"></i>
-                      <span className={this.state.activeTab[3] === '3' ? '' : 'd-none'}>CCCCCCCCCCCCCCCCCCCCCCCCC</span>
+                      <span className={this.state.activeTab[3] === '3' ? '' : 'd-none'}> Choose & Upload Files </span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -162,7 +286,7 @@ class Admin extends Component {
                       onClick={() => { this.toggle(3, '4'); }}
                     >
                       <i className="icon-pie-chart"></i>
-                      <span className={this.state.activeTab[3] === '4' ? '' : 'd-none'}>DDDDDDDDDDDDDDDDDDDDDDDD</span>
+                      <span className={this.state.activeTab[3] === '4' ? '' : 'd-none'}> Show Preview & Publish </span>
                     </NavLink>
                   </NavItem>
                 </Nav>
