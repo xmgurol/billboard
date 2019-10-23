@@ -215,11 +215,11 @@ class Admin extends Component {
       <>
         <TabPane tabId="1">
           <Row>
-            <Col style="align=middle">
-                <img src={landscapeImage} />
+            <Col style={{top: "40px", textAlign: "center"}}>
+                <img src={landscapeImage}/>
             </Col>
-            <Col style="align=middle">
-                <img src={portraitImage} />
+            <Col style={{textAlign: "center"}}>
+                <img src={portraitImage} /> 
             </Col>
           </Row>
           <Row>
@@ -230,6 +230,12 @@ class Admin extends Component {
             <Col>
               <br />
               <Button block color={this.state.horizontalColor} onClick={() => { this.chooseOrientation(2); }}>Horizontal</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <br/>
+              <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '2'); }}>Next</Button></div>
             </Col>
           </Row>
         </TabPane>
