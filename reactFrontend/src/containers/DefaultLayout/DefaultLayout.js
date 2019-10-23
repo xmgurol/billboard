@@ -42,14 +42,6 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
-            </Suspense>
-            <AppSidebarFooter />
-          </AppSidebar>
           <main className="main">
             <br/>
             <Container fluid>

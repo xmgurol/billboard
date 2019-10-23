@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Progress, TabContent, TabPane, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import landscapeImage from '../../assets/img/landscape.png';
+import portraitImage from '../../assets/img/portrait.png';
 
 class Admin extends Component {
 
@@ -140,41 +142,41 @@ class Admin extends Component {
     if (this.state.orientation === 1)
       this.setState({
         secondPane:
-        <>
-          <Row>
-            <Col>
-              <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
-            </Col>
-            <Col>
-              <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
-            </Col>
-            <Col>
-              <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
-            </Col>
-          </Row>
-        </>
+          <>
+            <Row>
+              <Col>
+                <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+              </Col>
+              <Col>
+                <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+              </Col>
+              <Col>
+                <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+              </Col>
+            </Row>
+          </>
       });
     else
       this.setState({
         secondPane:
-        <>
-          <Row>
-            <Col>
-              <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
-            </Col>
-            <Col>
-              <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
-            </Col>
-            <Col>
-              <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
-            </Col>
-          </Row>
-        </>
+          <>
+            <Row>
+              <Col>
+                <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+              </Col>
+              <Col>
+                <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+              </Col>
+              <Col>
+                <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+              </Col>
+            </Row>
+          </>
       });
   }
 
   thirdPane() {
-    let {imagePreviewUrl} = this.state;
+    let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} />);
@@ -183,28 +185,28 @@ class Admin extends Component {
     if (this.state.layout === 1)
       this.setState({
         thirdPane:
-        <>
-          <div>
-            <form onSubmit={this._handleSubmit}>
-              <input type="file" onChange={this._handleImageChange} />
-              <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
-            </form>
-            {$imagePreview}
-          </div>
-        </>
+          <>
+            <div>
+              <form onSubmit={this._handleSubmit}>
+                <input type="file" onChange={this._handleImageChange} />
+                <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+              </form>
+              {$imagePreview}
+            </div>
+          </>
       });
     else
       this.setState({
         thirdPane:
-        <>
-          <div>
-            <form onSubmit={this._handleSubmit}>
-              <input type="file" onChange={this._handleImageChange} />
-              <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
-            </form>
-            {$imagePreview}
-          </div>
-        </>
+          <>
+            <div>
+              <form onSubmit={this._handleSubmit}>
+                <input type="file" onChange={this._handleImageChange} />
+                <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+              </form>
+              {$imagePreview}
+            </div>
+          </>
       });
   }
 
@@ -213,16 +215,21 @@ class Admin extends Component {
       <>
         <TabPane tabId="1">
           <Row>
-            <Col>
-              <Button color={this.state.verticalColor} onClick={() => { this.chooseOrientation(1); }}>Vertical</Button>
+            <Col style="align=middle">
+                <img src={landscapeImage} />
             </Col>
-            <Col>
-              <Button color={this.state.horizontalColor} onClick={() => { this.chooseOrientation(2); }}>Horizontal</Button>
+            <Col style="align=middle">
+                <img src={portraitImage} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '2'); }}>Next</Button></div>
+              <br />
+              <Button block color={this.state.verticalColor} onClick={() => { this.chooseOrientation(1); }}>Vertical</Button>
+            </Col>
+            <Col>
+              <br />
+              <Button block color={this.state.horizontalColor} onClick={() => { this.chooseOrientation(2); }}>Horizontal</Button>
             </Col>
           </Row>
         </TabPane>
