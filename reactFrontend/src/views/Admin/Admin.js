@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Progress, TabContent, TabPane, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Progress, TabContent, TabPane, Nav, NavItem, NavLink, Button, FormGroup, Label, Input } from 'reactstrap';
+
 import landscapeImage from '../../assets/img/landscape.png';
 import portraitImage from '../../assets/img/portrait.png';
+
+import landscape1 from '../../assets/img/landscape1.png';
+import landscape2 from '../../assets/img/landscape2.png';
+import landscape3 from '../../assets/img/landscape3.png';
+
+import portrait1 from '../../assets/img/portrait1.png';
+import portrait2 from '../../assets/img/portrait2.png';
+import portrait3 from '../../assets/img/portrait3.png';
+
+import axios from "axios";
 
 class Admin extends Component {
 
@@ -32,7 +43,13 @@ class Admin extends Component {
 
   _handleSubmit(e) {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
+    const data = new FormData()
+    data.append('file', this.state.file);
+    axios.post("http://localhost:7000/upload", data, {
+    })
+      .then(res => {
+        console.log(res.statusText);
+      });
   }
 
   _handleImageChange(e) {
@@ -77,11 +94,9 @@ class Admin extends Component {
       });
     }
 
-    if (this.state.progress === 0) {
-      this.setState({
-        progress: this.state.progress + 25
-      });
-    }
+    this.setState({
+      progress: 25
+    });
   }
 
   chooseLayout(selection) {
@@ -119,11 +134,9 @@ class Admin extends Component {
       });
     }
 
-    if (this.state.progress === 25) {
-      this.setState({
-        progress: this.state.progress + 25
-      });
-    }
+    this.setState({
+      progress: 50
+    });
   }
 
   toggle(tabPane, tab) {
@@ -144,14 +157,34 @@ class Admin extends Component {
         secondPane:
           <>
             <Row>
+              <Col style={{ textAlign: "center" }}>
+                <img src={landscape1} />
+              </Col>
+              <Col style={{ textAlign: "center" }}>
+                <img src={landscape2} />
+              </Col>
+              <Col style={{ textAlign: "center" }}>
+                <img src={landscape3} />
+              </Col>
+            </Row>
+            <Row>
               <Col>
-                <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+                <br />
+                <div align="left"><Button block color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
               </Col>
               <Col>
-                <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+                <br />
+                <div align="middle"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
               </Col>
               <Col>
-                <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+                <br />
+                <div align="right"><Button block color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <br />
+                <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '3'); }}>Next</Button></div>
               </Col>
             </Row>
           </>
@@ -161,14 +194,34 @@ class Admin extends Component {
         secondPane:
           <>
             <Row>
+              <Col style={{ textAlign: "center" }}>
+                <img src={portrait1} />
+              </Col>
+              <Col style={{ textAlign: "center" }}>
+                <img src={portrait2} />
+              </Col>
+              <Col style={{ textAlign: "center" }}>
+                <img src={portrait3} />
+              </Col>
+            </Row>
+            <Row>
               <Col>
-                <div align="left"><Button color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
+                <br />
+                <div align="left"><Button block color={this.state.layoutFirstColor} onClick={() => { this.chooseLayout(1); }}>Choose</Button></div>
               </Col>
               <Col>
-                <div align="middle"><Button color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
+                <br />
+                <div align="middle"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
               </Col>
               <Col>
-                <div align="right"><Button color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+                <br />
+                <div align="right"><Button block color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <br />
+                <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '3'); }}>Next</Button></div>
               </Col>
             </Row>
           </>
@@ -186,26 +239,142 @@ class Admin extends Component {
       this.setState({
         thirdPane:
           <>
-            <div>
-              <form onSubmit={this._handleSubmit}>
-                <input type="file" onChange={this._handleImageChange} />
-                <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
-              </form>
-              {$imagePreview}
-            </div>
+            <Row>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-a" id="select-a">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" accept=".png,.jpg,.jpeg" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-b" id="select-b">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-c" id="select-c">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+            </Row>
           </>
       });
     else
       this.setState({
         thirdPane:
           <>
-            <div>
-              <form onSubmit={this._handleSubmit}>
-                <input type="file" onChange={this._handleImageChange} />
-                <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
-              </form>
-              {$imagePreview}
-            </div>
+            <Row>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-a" id="select-a">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-b" id="select-b">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+              <Col>
+                <p>A:</p>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label htmlFor="select">Select</Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input type="select" name="select-c" id="select-c">
+                      <option value="0">Please select</option>
+                      <option value="1">Option #1</option>
+                      <option value="2">Option #2</option>
+                      <option value="3">Option #3</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <form onSubmit={this._handleSubmit}>
+                  <input type="file" onChange={this._handleImageChange} />
+                  <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+                {$imagePreview}
+              </Col>
+            </Row>
           </>
       });
   }
@@ -215,11 +384,11 @@ class Admin extends Component {
       <>
         <TabPane tabId="1">
           <Row>
-            <Col style={{top: "40px", textAlign: "center"}}>
-                <img src={landscapeImage}/>
+            <Col style={{ top: "40px", textAlign: "center" }}>
+              <img src={landscapeImage} />
             </Col>
-            <Col style={{textAlign: "center"}}>
-                <img src={portraitImage} /> 
+            <Col style={{ textAlign: "center" }}>
+              <img src={portraitImage} />
             </Col>
           </Row>
           <Row>
@@ -234,7 +403,7 @@ class Admin extends Component {
           </Row>
           <Row>
             <Col>
-              <br/>
+              <br />
               <div align="right"><Button color="primary" onClick={() => { this.toggle(3, '2'); }}>Next</Button></div>
             </Col>
           </Row>

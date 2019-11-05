@@ -34,18 +34,6 @@ app.route('/upload').post((req, res, next) => {
     });
 });
 
-/**
- * Serve the basic index.html with upload form
- */
-app.route('/').get((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write('<form action="http://localhost:3200/upload" method="post" enctype="multipart/form-data">');
-    res.write('<input type="file" name="fileToUpload"><br>');
-    res.write('<input type="submit">');
-    res.write('</form>');
-    return res.end();
-});
-
 const server = app.listen(7000, function () {
     console.log(`Listening on port ${server.address().port}`);
 });
