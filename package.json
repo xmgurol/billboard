@@ -13,6 +13,7 @@
     "connect-busboy": "0.0.2",
     "path": "0.12.7",
     "fs-extra": "8.1.0",
-    "mongodb": "3.3.3"
+    "mongodb": "3.3.3",
+    "cors": "2.8.5"
   }
 }
