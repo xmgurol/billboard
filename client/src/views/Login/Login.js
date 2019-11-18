@@ -5,6 +5,16 @@ import axios from "axios";
 
 class Login extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      failure: false
+    };
+
+    this.toggleFailure = this.toggleFailure.bind(this);
+  }
+
   loginPressed() {
     var username1 = document.getElementById("username").value
     var password2 = document.getElementById("password").value
@@ -19,8 +29,18 @@ class Login extends Component {
     .then(res => {
         console.log(res);
         console.log('AXİOS İÇİ' + res.data);
-        if (res.data.length !== 0)
+        if (res.data.length > 0 ) {
           this.props.history.push('/admin');
+        }
+        else {
+          this.setState({ failure: true });
+        }
+    });
+  }
+
+  toggleFailure() {
+    this.setState({
+      failure: false,
     });
   }
 
@@ -67,8 +87,7 @@ class Login extends Component {
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
+                      <p>Seviyom çok <3</p>
                       <Link to="/register">
                         <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
                       </Link>
@@ -79,6 +98,16 @@ class Login extends Component {
             </Col>
           </Row>
         </Container>
+        <Modal isOpen={this.state.failure} toggle={this.clickSubmit}
+          className={'modal-warning ' + this.props.className}>
+          <ModalHeader toggle={this.toggleSuccess}>Success</ModalHeader>
+          <ModalBody>
+            User Not Found.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="warning" onClick={this.toggleFailure}>OK</Button>{' '}
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

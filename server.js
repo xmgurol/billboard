@@ -117,12 +117,19 @@ app.route('/register').get((req,res) => {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("nazBitirme");
-        var query = { username: login, password: password };
-        dbo.collection("Users").insertOne(query, function(err, response) {
+        var query = { username: login };
+        dbo.collection("Users").find(query).toArray(function (err, result) {
             if (err) throw err;
-            res.send("1 user inserted");
+            if (result.length > 0) res.send("User already exists.");
+            else
+            dbo.collection("Users").insertOne(query, function(err, response) {
+                if (err) throw err;
+                res.send("1 user inserted");
+                db.close();
+            });
             db.close();
         });
+        
     });
 });
 
