@@ -71,6 +71,5 @@
   "engines": {
     "node": ">=8.10",
     "npm": ">=6"
-  },
-  "proxy": "http://localhost:7000/"
+  }
 }
