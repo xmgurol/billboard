@@ -1,0 +1,2 @@
+C:\Users\tr24747\source\repos\billboardBackend\billboardBackend\obj\Debug\billboardBackend.njsprojAssemblyReference.cache
+C:\Users\tr24747\source\repos\billboardBackend\billboardBackend\bin\Microsoft.NodejsTools.WebRole.dll
