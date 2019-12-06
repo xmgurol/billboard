@@ -43,11 +43,6 @@ var mime = {
  */
 
 io.on('connection', function(socket) {
-    /*socket.on('changePictureOnScreen', function(from, msg) {
-        console.log("geldi.");
-        //io.emit("pexels-photo-414612.jpeg");
-    });*/
-
     socket.on('disconnect', function() {
         io.emit('user disconnected');
     });
@@ -91,18 +86,9 @@ app.route('/upload').post((req, res) => {
 });
 
 app.route('/getFiles').get((req, res) => {
-    var fileType = req.query.fileType;
     var files = [];
     fs.readdirSync(uploadPath).forEach(file => {
-        var fileNameSplitted = file.toString().split('.');
-        if ((fileType === 'text' && fileNameSplitted[fileNameSplitted.length - 1] === 'txt') ||
-            (fileType === 'image' &&
-                (fileNameSplitted[fileNameSplitted.length - 1] === 'png' ||
-                    fileNameSplitted[fileNameSplitted.length - 1] === 'jpg' ||
-                    fileNameSplitted[fileNameSplitted.length - 1] === 'jpeg' ||
-                    fileNameSplitted[fileNameSplitted.length - 1] === 'gif'))) {
-            files.push(file);
-        }
+        files.push(file);
     });
     res.send(files);
 });
@@ -139,15 +125,15 @@ app.route('/screen').put((req, res) => {
         dbo.collection("Screens").updateOne(query, newvalues, function (err, result) {
             if (err) throw err;
             res.send("1 document updated");
-            io.sockets.emit("changePictureOnScreen",
-                {
-                    Orientation: body.orientation,
-                    Layout: body.layout,
-                    FileA: body.FileA,
-                    FileB: body.FileB,
-                    FileC: body.FileC
-                }
-            );
+            var sendBody =
+            {
+                Orientation: body.Orientation,
+                Layout: body.Layout,
+                FileA: body.FileA,
+                FileB: body.FileB,
+                FileC: body.FileC
+            };
+            io.sockets.emit("changePictureOnScreen", sendBody);
             db.close();
         });
     });
