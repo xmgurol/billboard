@@ -43,7 +43,8 @@ class Admin extends Component {
       thirdPane: <></>,
       fourthPane: <></>,
       images: [],
-      imageOrTextPane: <></>
+      imageOrTextPane: <></>,
+      subtitle: "CSE 492"
     };
 
     this._handleImageChange = this._handleImageChange.bind(this);
@@ -63,6 +64,8 @@ class Admin extends Component {
   }
 
   saveAndPublish() {
+    var subtitle = document.getElementById("subtitle").value;
+    console.log("SUBTITLE: " + subtitle);
     var body =
     {
       Orientation: this.state.orientation,
@@ -70,6 +73,7 @@ class Admin extends Component {
       FileA: this.state.fileSelect1,
       FileB: this.state.fileSelect2,
       FileC: this.state.fileSelect3,
+      Subtitle: subtitle
     };
     console.log(body);
     axios.put('http://localhost:7000/screen', body)
@@ -196,9 +200,6 @@ class Admin extends Component {
                 <img src={landscape1} />
               </Col>
               <Col style={{ textAlign: "center" }}>
-                <img src={landscape2} />
-              </Col>
-              <Col style={{ textAlign: "center" }}>
                 <img src={landscape3} />
               </Col>
             </Row>
@@ -209,11 +210,7 @@ class Admin extends Component {
               </Col>
               <Col>
                 <br />
-                <div align="middle"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
-              </Col>
-              <Col>
-                <br />
-                <div align="right"><Button block color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+                <div align="right"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
               </Col>
             </Row>
             <Row>
@@ -237,9 +234,6 @@ class Admin extends Component {
                 <img src={portrait1} />
               </Col>
               <Col style={{ textAlign: "center" }}>
-                <img src={portrait2} />
-              </Col>
-              <Col style={{ textAlign: "center" }}>
                 <img src={portrait3} />
               </Col>
             </Row>
@@ -250,11 +244,7 @@ class Admin extends Component {
               </Col>
               <Col>
                 <br />
-                <div align="middle"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
-              </Col>
-              <Col>
-                <br />
-                <div align="right"><Button block color={this.state.layoutThirdColor} onClick={() => { this.chooseLayout(3); }}>Choose</Button></div>
+                <div align="right"><Button block color={this.state.layoutSecondColor} onClick={() => { this.chooseLayout(2); }}>Choose</Button></div>
               </Col>
             </Row>
             <Row>
@@ -334,6 +324,10 @@ class Admin extends Component {
               </form>
             </Col>
           </Row>
+          <br />
+          <Row>
+          <Input type="text" id="subtitle" placeholder="Subtitle" autoComplete="CSE 492" />
+          </Row>
           <Row>
             <Col>
               <br />
@@ -370,11 +364,11 @@ class Admin extends Component {
           <Row>
             <Col>
               <br />
-              <Button block color={this.state.verticalColor} onClick={() => { this.chooseOrientation(1); }}>Vertical</Button>
+              <Button block color={this.state.verticalColor} onClick={() => { this.chooseOrientation(1); }}>Horizontal</Button>
             </Col>
             <Col>
               <br />
-              <Button block color={this.state.horizontalColor} onClick={() => { this.chooseOrientation(2); }}>Horizontal</Button>
+              <Button block color={this.state.horizontalColor} onClick={() => { this.chooseOrientation(2); }}>Vertical</Button>
             </Col>
           </Row>
           <Row>

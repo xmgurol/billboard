@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(7000);
+server.listen(7000); // server is deployed on port 7000
 
 app.use(cors());
 app.options('*', cors());
