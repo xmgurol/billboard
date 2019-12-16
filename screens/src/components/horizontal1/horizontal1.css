@@ -1,0 +1,66 @@
+body {
+ 
+  height: 100%;   width: 100%;    position: relative;
+  margin:0;
+  padding:0;
+  
+}
+
+
+
+
+.split1 {
+  height: 100%;
+  width: 33.33%;
+  position: fixed;
+  overflow: hidden;
+
+  
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  background-color: blue;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+ 
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  background-color: red;
+  
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.middle {
+  
+  left: 33.33%;
+  background-color: green;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+/* Style the image inside the centered container, if needed */
+.centered img {
+  height: auto;
+  width: 100%;
+  object-fit: fill;
+  
+
+}
